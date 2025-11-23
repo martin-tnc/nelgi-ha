@@ -1,0 +1,30 @@
+toggle_miboxer_livingroom_leds:
+  alias: Toggle MiBoxer living-room LEDs
+  mode: single
+
+  variables:
+    leds:
+      - light.miboxer_led_livingroom_1_2
+      - light.miboxer_led_livingroom_2_3
+      - light.miboxer_led_livingroom_3_4
+    sensor: binary_sensor.living_room_leds_on # 25 % helper for this room
+
+  sequence:
+    - choose:
+        # ── BRANCH A: sensor OFF  →  all lamps < 25 %  →  fade-IN to 100 %
+        - conditions:
+            - condition: template
+              value_template: "{{ is_state(sensor, 'off') }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: "{{ leds }}"
+              data:
+                brightness: 255 # full power (0-255 scale)
+                kelvin: 3400
+
+      # ── DEFAULT: sensor ON  →  some lamp ≥ 25 %  →  turn EVERYTHING off
+      default:
+        - service: light.turn_off
+          target:
+            entity_id: "{{ leds }}"

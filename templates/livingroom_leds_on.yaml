@@ -1,0 +1,17 @@
+- binary_sensor:
+    - name: Living Room LEDs On
+      unique_id: livingroom_leds_on # permanent ID in the registry
+      state: >-
+        {%- set limit = 63 -%}                             {# 25 % of 255 #}
+        {%- set leds = [
+              'light.miboxer_led_livingroom_1_2',
+              'light.miboxer_led_livingroom_2_3',
+              'light.miboxer_led_livingroom_3_4'] -%}
+        {%- set ns = namespace(onbright = false) -%}
+        {%- for l in leds -%}
+          {%- if is_state(l, 'on') and (state_attr(l, 'brightness') | int(0)) > limit -%}
+            {%- set ns.onbright = true -%}
+            {%- break -%}      {# we already found one, no need to keep looping #}
+          {%- endif -%}
+        {%- endfor -%}
+        {{ ns.onbright }}

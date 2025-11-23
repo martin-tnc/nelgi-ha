@@ -1,0 +1,13 @@
+- id: bedroom_upper_left_rocker
+  alias: Bedroom – upper wireless rocker LEFT → tvstand LED
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: 417f740f1801c902551b6c3d71c12008
+        command: 41_single
+  actions:
+    - action: light.toggle
+      target:
+        entity_id: light.gledopto_led_bedroom_tvstand

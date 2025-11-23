@@ -1,0 +1,102 @@
+- id: '1754646623131'
+  alias: Porch button - Unlock pedestrian gate on press
+  description: ''
+  triggers:
+  - device_id: b2f4118d29092b74bc699de17d932e07
+    domain: zha
+    type: remote_button_short_press
+    subtype: button
+    trigger: device
+  conditions: []
+  actions:
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      entity_id: lock.side_door
+  mode: single
+- id: '1754646693908'
+  alias: Porch button - unlock vehicle gate
+  description: ''
+  triggers:
+  - device_id: b2f4118d29092b74bc699de17d932e07
+    domain: zha
+    type: remote_button_long_press
+    subtype: button
+    trigger: device
+  conditions: []
+  actions:
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      entity_id: lock.vehicle_gate
+  mode: single
+- id: '1754646768459'
+  alias: Entrance hall Aqara h1 LEFT button - unlock vehicle gate
+  description: ''
+  triggers:
+  - device_id: 5d8ec7c0cd666666cc1a4e09d2b7f6d6
+    domain: zha
+    type: remote_button_short_press
+    subtype: left
+    trigger: device
+  conditions: []
+  actions:
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      entity_id: lock.vehicle_gate
+  mode: single
+- id: '1754646871361'
+  alias: Entrance hall Aqara h1 RIGHT button - unlock pedestrian gate
+  description: ''
+  triggers:
+  - device_id: 5d8ec7c0cd666666cc1a4e09d2b7f6d6
+    domain: zha
+    type: remote_button_short_press
+    subtype: right
+    trigger: device
+  conditions: []
+  actions:
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      entity_id: lock.side_door
+  mode: single
+- id: '1762609845922'
+  alias: Porn button - unlock walk gate
+  description: ''
+  triggers:
+  - device_id: 391d9c339e0500cd981f7af62b2e7bab
+    domain: zha
+    type: remote_button_short_press
+    subtype: button
+    trigger: device
+  conditions: []
+  actions:
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      device_id: ef819c92ff1a4cb2e0cfeedf80ede88f
+  mode: single
+- id: '1762609903600'
+  alias: Porch button - unlock car gate
+  description: ''
+  triggers:
+  - device_id: 391d9c339e0500cd981f7af62b2e7bab
+    domain: zha
+    type: remote_button_long_press
+    subtype: button
+    trigger: device
+  conditions: []
+  actions:
+  - action: lock.unlock
+    metadata: {}
+    data: {}
+    target:
+      device_id: c4484e75fb1c45f7fe6bd05e2f6be07b
+  mode: single

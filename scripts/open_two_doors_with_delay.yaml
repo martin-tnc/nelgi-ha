@@ -1,0 +1,10 @@
+open_gate_and_front_door_with_delay:
+  alias: Open two doors with delay
+  mode: single
+  sequence:
+    - service: lock.unlock
+      target:
+        entity_id: lock.side_door
+    - delay:
+        seconds: 4
+    - service: script.unlock_yale_front

@@ -1,0 +1,15 @@
+- id: outdoor_g4_doorbell_unauthorized
+  alias: Outdoor G4 Doorbell Fingerprint → Unauthorized log
+  trigger:
+    - platform: state
+      entity_id: event.g4_doorbell_gate_fingerprint
+  condition:
+    - condition: template
+      value_template: >
+        {% set a = trigger.to_state.attributes %}
+        {{ a.get('event_type') != 'identified' }}
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Unauthorized fingerprint"
+        message: "{{ trigger.to_state.attributes | tojson }}"

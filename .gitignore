@@ -1,0 +1,41 @@
+# Home Assistant runtime state (never commit)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+home-assistant.log*
+OZW_Log.txt
+zigbee.db*
+zwave*.*
+
+# Cloud, tokens, and registries
+.cloud/
+.storage/
+secrets.yaml
+*.key
+*.pem
+.ha_run.lock
+.HA_VERSION
+
+# Dependency/build artifacts
+deps/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Caches, temp, OS cruft
+*.bak
+*.swp
+*.tmp
+.DS_Store
+
+# Backups/exports
+backup/
+*.tar
+*.zip
+*.tgz
+*.gz
+
+# TTS/cache media (regenerate)
+tts/
+

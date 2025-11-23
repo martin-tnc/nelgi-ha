@@ -1,0 +1,41 @@
+- id: hallway_back_remote_right
+  alias: Hallway back - rocker RIGHT → Hallway Spotlight
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: dd5a1770cbbb2e180cec948a0855c0ca
+        command: 42_single
+  actions:
+    - action: switch.toggle
+      target:
+        entity_id: switch.aqara_h1_hallway_front_switch_2
+
+- id: hallway_back_remote_left
+  alias: Hallway back - rocker LEFT → Hallway LED
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: dd5a1770cbbb2e180cec948a0855c0ca
+        command: 41_single
+  actions:
+    - action: script.toggle
+      target:
+        entity_id: script.toggle_miboxer_hallway_leds
+
+- id: hallway_front_remote_left
+  alias: Hallway front - rocker LEFT → Hallway LED
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: a94de7c3104bd4ee1d977abdec76a3c7
+        command: 41_single
+  actions:
+    - action: script.toggle
+      target:
+        entity_id: script.toggle_miboxer_hallway_leds

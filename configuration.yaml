@@ -1,0 +1,42 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+# My own hand-edited yamls
+automation manual: !include_dir_merge_list automations/
+script manual: !include_dir_merge_named scripts/
+template: !include_dir_merge_list templates/
+
+# Automations created in the UI
+automation ui: !include automations.yaml
+script ui: !include scripts.yaml
+scene: !include scenes.yaml
+
+###########################
+# 2. ENERGY (kWh totals)  #
+###########################
+sensor:
+  # ---------- Solar production (into house + battery) ----------
+  - platform: integration
+    source: sensor.total_solar_power
+    name: "Solar Energy Total"
+    unique_id: solar_energy_total
+    unit_prefix: k
+    method: left
+
+  # ------------------- Battery charge / discharge --------------
+  - platform: integration
+    source: sensor.solarnet_power_battery_charge
+    name: "Battery Energy Charged"
+    unique_id: battery_energy_charged
+    unit_prefix: k
+    method: left
+  - platform: integration
+    source: sensor.solarnet_power_battery_discharge
+    name: "Battery Energy Discharged"
+    unique_id: battery_energy_discharged
+    unit_prefix: k
+    method: left

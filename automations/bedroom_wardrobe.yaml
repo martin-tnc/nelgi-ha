@@ -1,0 +1,27 @@
+- id: wardrobe_wireless_left
+  alias: Wardrobe – wireless rocker LEFT → wardrobe Spotlight
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: 253171d10de518279bdee9f88abdb77d
+        command: 1_single
+  actions:
+    - action: switch.toggle
+      target:
+        entity_id: switch.aqara_h1_bedroom_door_upper_switch
+
+- id: wardrobe_wireless_right
+  alias: Wardrobe – wireless rocker RIGHT → wardrobe LED
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: 253171d10de518279bdee9f88abdb77d
+        command: 2_single
+  actions:
+    - action: light.toggle
+      target:
+        entity_id: light.miboxer_led_bedroom_wardrobe

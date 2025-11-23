@@ -1,0 +1,27 @@
+toggle_miboxer_generic:
+  alias: Toggle a group of MiBoxer lights
+  mode: single
+
+  fields:
+    lights:
+      description: List of MiBoxer light entities
+      example: "['light.miboxer_led_livingroom_1_2', …]"
+    sensor:
+      description: Binary-sensor that is **on** when any light ≥ 25 %
+      example: binary_sensor.living_room_leds_on
+
+  sequence:
+    - choose:
+        # Sensor is OFF  →  all lights are < 25 % (or off)  →  turn them ON
+        - conditions:
+            - condition: template
+              value_template: "{{ is_state(sensor, 'off') }}"
+          sequence:
+            - service: light.turn_on
+              target: { entity_id: "{{ lights }}" }
+              data: { brightness_pct: 100, kelvin: 3400 }
+
+      # DEFAULT – sensor is ON  →  at least one light ≥ 25 %  →  turn ALL OFF
+      default:
+        - service: light.turn_off
+          target: { entity_id: "{{ lights }}" }

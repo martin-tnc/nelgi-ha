@@ -1,0 +1,8 @@
+unlock_yale_front:
+  alias: Unlock Yale front door
+  sequence:
+    - action: lock.unlock
+      target:
+        entity_id: lock.martin_tints_gmail_com
+      data:
+        code: !secret yale_front_pin

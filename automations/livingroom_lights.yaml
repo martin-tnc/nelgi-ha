@@ -1,0 +1,13 @@
+- id: livingroom_upper_remote_left
+  alias: Living Room Upper - rocker LEFT → Living Room LED
+  mode: single
+  triggers:
+    - trigger: event
+      event_type: zha_event
+      event_data:
+        device_id: 09fc86533c7df4814a62ba886d829b71
+        command: 41_single
+  actions:
+    - action: script.toggle
+      target:
+        entity_id: script.toggle_miboxer_living_room_leds

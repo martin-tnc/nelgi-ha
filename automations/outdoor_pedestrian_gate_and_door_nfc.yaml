@@ -1,0 +1,15 @@
+- id: outdoor_pedestrian_gate_and_door_nfc
+  alias: Outdoor G4 Doorbell → Side door (+ Front) when ACTIVE user nfc
+  mode: single
+  triggers:
+    - trigger: state
+      entity_id: event.g4_doorbell_gate_nfc
+  conditions:
+    - condition: template
+      value_template: >
+        {% set a = trigger.to_state.attributes if trigger.to_state else {} %}
+        {{ a.get('event_type') == 'scanned'
+          and a.get('user_status') == 'ACTIVE'
+          and (a.get('nfc_id') | string | length) > 0 }}
+  actions:
+    - action: script.open_gate_and_front_door_with_delay

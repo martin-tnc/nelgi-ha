@@ -1,0 +1,76 @@
+sensor:
+  ############################################################
+  #   SOLAR  — sum of BOTH inverters (adapt if you add more) #
+  ############################################################
+  - name: "Total Solar Power"
+    unique_id: total_solar_power
+    device_class: power
+    state_class: measurement
+    unit_of_measurement: W
+    state: >
+      {{ states('sensor.solarnet_power_photovoltaics')      | float(0) +
+          states('sensor.solarnet_power_photovoltaics_2')    | float(0) }}
+
+  ############################################################
+  #   GRID  — split signed power into import / export        #
+  ############################################################
+  # positive → import
+  - name: "Grid Import Power"
+    unique_id: grid_import_power
+    state: "{{ max(states('sensor.smart_meter_ts_65a_3_real_power') | float(0), 0) }}"
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement
+
+  # negative → export  (flip the sign)
+  - name: "Grid Export Power"
+    unique_id: grid_export_power
+    state: "{{ max(0 - states('sensor.smart_meter_ts_65a_3_real_power') | float(0), 0) }}"
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement
+
+  ############################################################
+  #   BATTERY  — keep discharge (+) vs. charge (–) too       #
+  ############################################################
+  - name: "Battery Net Power"
+    unique_id: battery_net_power
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement
+    state: >
+      {{  states('sensor.solarnet_power_battery_discharge') | float(0)
+        - states('sensor.solarnet_power_battery_charge')    | float(0) }}
+
+  ############################################################
+  #   HOME  — total house load                               #
+  ############################################################
+  - name: "Home Consumption Power"
+    unique_id: home_consumption_power
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement
+    #   PV      + Grid import   + Battery discharge
+    # - Grid export - Battery charge
+    state: >
+      {{ states('sensor.total_solar_power')       | float(0)
+        + states('sensor.grid_import_power')       | float(0)
+        + max(states('sensor.battery_net_power')   | float(0), 0)
+        - states('sensor.grid_export_power')       | float(0)
+        - max(0 - states('sensor.battery_net_power') | float(0), 0) }}
+
+  ############################################################
+  #   SOLAR vs FORECAST (adjust **your** forecast entity)    #
+  ############################################################
+  - name: "PV vs Forecast"
+    unique_id: pv_vs_forecast
+    unit_of_measurement: "%"
+    state_class: measurement
+    #   PV      + Grid import   + Battery discharge
+    # - Grid export - Battery charge
+    state: float(0)
+#          {{ states('sensor.total_solar_power')       | float(0)
+#           + states('sensor.grid_import_power')       | float(0)
+#           + max(states('sensor.battery_net_power')   | float(0), 0)
+#           - states('sensor.grid_export_power')       | float(0)
+#           - max(0 - states('sensor.battery_net_power') | float(0), 0) }}
