@@ -23,6 +23,12 @@ deps/
 __pycache__/
 *.py[cod]
 
+# Custom components (managed on device or separately)
+custom_components/
+
+# Local tooling outputs
+.code/
+
 # Caches, temp, OS cruft
 *.bak
 *.swp
@@ -38,4 +44,3 @@ backup/
 
 # TTS/cache media (regenerate)
 tts/
-
