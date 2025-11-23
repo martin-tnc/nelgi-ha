@@ -44,3 +44,6 @@ backup/
 
 # TTS/cache media (regenerate)
 tts/
+
+# HACS/frontend cache (reinstalled via HACS)
+www/
